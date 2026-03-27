@@ -2,4 +2,11 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="colorPrimary">#C62828</color>
+    <color name="colorPrimaryDark">#8E0000</color>
+    <color name="colorAccent">#FF8F00</color>
+    <color name="background">#F5F5F5</color>
+    <color name="seat_available">#4CAF50</color>
+    <color name="seat_selected">#2196F3</color>
+    <color name="seat_booked">#9E9E9E</color>
 </resources>

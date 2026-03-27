@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.appth.utils.SessionManager;
+import com.example.second_mini_mobile_project.utils.SessionManager;
 
 public class MainActivity extends AppCompatActivity {
 
