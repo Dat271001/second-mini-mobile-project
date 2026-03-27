@@ -1,4 +1,4 @@
-package com.example.second_mini_mobile_project;
+package com.example.appth;
 
 import android.content.Intent;
 import android.os.Bundle;

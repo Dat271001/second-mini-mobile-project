@@ -1,0 +1,52 @@
+package com.example.second_mini_mobile_project.utils;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+
+/**
+ * Quản lý trạng thái đăng nhập bằng SharedPreferences
+ */
+public class SessionManager {
+    private static final String PREF_NAME = "MovieAppSession";
+    private static final String KEY_IS_LOGGED_IN = "isLoggedIn";
+    private static final String KEY_USER_ID = "userId";
+    private static final String KEY_USERNAME = "username";
+    private static final String KEY_FULL_NAME = "fullName";
+
+    private final SharedPreferences pref;
+    private final SharedPreferences.Editor editor;
+
+    public SessionManager(Context context) {
+        pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        editor = pref.edit();
+    }
+
+    public void createLoginSession(int userId, String username, String fullName) {
+        editor.putBoolean(KEY_IS_LOGGED_IN, true);
+        editor.putInt(KEY_USER_ID, userId);
+        editor.putString(KEY_USERNAME, username);
+        editor.putString(KEY_FULL_NAME, fullName);
+        editor.apply();
+    }
+
+    public boolean isLoggedIn() {
+        return pref.getBoolean(KEY_IS_LOGGED_IN, false);
+    }
+
+    public int getUserId() {
+        return pref.getInt(KEY_USER_ID, -1);
+    }
+
+    public String getUsername() {
+        return pref.getString(KEY_USERNAME, "");
+    }
+
+    public String getFullName() {
+        return pref.getString(KEY_FULL_NAME, "");
+    }
+
+    public void logout() {
+        editor.clear();
+        editor.apply();
+    }
+}
