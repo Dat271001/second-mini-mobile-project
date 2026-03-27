@@ -1,24 +1,74 @@
-package com.example.second_mini_mobile_project;
+package com.example.appth;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
+import com.example.appth.utils.SessionManager;
 
 public class MainActivity extends AppCompatActivity {
+
+    private SessionManager sessionManager;
+    private TextView tvWelcome;
+    private Button btnLogin, btnLogout;
+    private View btnMyTickets;
+    private LinearLayout layoutLoggedIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+
+        sessionManager = new SessionManager(this);
+
+        tvWelcome = findViewById(R.id.tvWelcome);
+        btnLogin = findViewById(R.id.btnLogin);
+        btnLogout = findViewById(R.id.btnLogout);
+        btnMyTickets = findViewById(R.id.btnMyTickets);
+        layoutLoggedIn = findViewById(R.id.layoutLoggedIn);
+
+        findViewById(R.id.btnMovies).setOnClickListener(v ->
+                startActivity(new Intent(this, MoviesActivity.class)));
+
+        findViewById(R.id.btnTheaters).setOnClickListener(v ->
+                startActivity(new Intent(this, TheatersActivity.class)));
+
+        findViewById(R.id.btnShowtimes).setOnClickListener(v ->
+                startActivity(new Intent(this, ShowtimesActivity.class)));
+
+        btnMyTickets.setOnClickListener(v ->
+                startActivity(new Intent(this, MyTicketsActivity.class)));
+
+        btnLogin.setOnClickListener(v ->
+                startActivity(new Intent(this, LoginActivity.class)));
+
+        btnLogout.setOnClickListener(v -> {
+            sessionManager.logout();
+            updateLoginUI();
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateLoginUI();
+    }
+
+    private void updateLoginUI() {
+        if (sessionManager.isLoggedIn()) {
+            tvWelcome.setText("Xin chào, " + sessionManager.getFullName() + "!");
+            tvWelcome.setVisibility(View.VISIBLE);
+            btnLogin.setVisibility(View.GONE);
+            layoutLoggedIn.setVisibility(View.VISIBLE);
+        } else {
+            tvWelcome.setVisibility(View.GONE);
+            btnLogin.setVisibility(View.VISIBLE);
+            layoutLoggedIn.setVisibility(View.GONE);
+        }
     }
 }
